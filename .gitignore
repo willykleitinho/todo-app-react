@@ -11,6 +11,9 @@
 # production
 /build
 
+# previous (no react)
+/todo-app
+
 # misc
 .DS_Store
 .env.local
