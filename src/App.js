@@ -1,7 +1,7 @@
 import Header from './components/Header';
 import Form from './components/Form';
 import TaskList from './components/TaskList';
-import Task from './components/Task';
+
 
 const tasks = [];
 
