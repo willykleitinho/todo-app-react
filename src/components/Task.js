@@ -1,22 +1,13 @@
-import { useState } from 'react';
 
-
-export default function Task({id, title, done}) {
-
-  const [state, setState] = useState({id, title, done});
-
-  function updateTask(e) {
-    console.log(e.target.parentElement.dataset.id);
-  }
-
+export default function Task({id, title, done, updateTask, deleteTask}) {
   return (
-    <li className={(state.done) ? 'task done' : 'task'} data-id={state.id} draggable='true'>
-      <button className='checkmark' name='complete-task' onClick={() => setState({...state, done: !state.done})}>
-        <span className='hidden'>Update task state</span>
+    <li key={id} className={(done) ? 'task done' : 'task'} data-id={id} draggable='true'>
+      <button className='checkmark' name='complete-task' onClick={updateTask}>
+        <span className='hidden'>Update task "{title}"</span>
       </button>
-      <span className='title'>{state.title}</span>
-      <button className='remove-task-button' name='delete-task'>
-        <span className='hidden'>Delete task</span>
+      <span className='title'>{title}</span>
+      <button className='remove-task-button' name='delete-task' onClick={deleteTask}>
+        <span className='hidden'>Delete task "{title}"</span>
       </button>
     </li>
   );

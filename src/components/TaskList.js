@@ -2,16 +2,17 @@ import Task from './Task';
 import Controls from './Controls';
 
 
-export default function TaskList({tasks}) {
+export default function TaskList({tasks, updateTask, deleteTask}) {
   return (
     <>
       <h2 className="hidden">Tasks</h2>
       <h3 className="hidden">Task list</h3>
       <ul id="tasks-list">
-        <Task title='test title' id={10} done={true} />
+        {tasks.map(task => 
+          <Task key={task.id} title={task.title} id={task.id} done={task.done} updateTask={updateTask} deleteTask={deleteTask} />)}
       </ul>
       <h3 className="hidden">Controls</h3>
-      <Controls />
+      <Controls length={tasks.length}/>
     </>
   );
 }

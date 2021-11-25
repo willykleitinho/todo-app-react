@@ -1,8 +1,8 @@
 
-export default function Controls() {
+export default function Controls({length}) {
   return (
     <div className="controls">
-      <p id="items-left">0 item(s) left</p>
+      <p id="items-left">{length} item(s) left</p>
       <ul>
         <li><button name="all-tasks" data-view="all" className="selected">All</button></li>
         <li><button name="active-tasks" data-view="active">Active</button></li>
