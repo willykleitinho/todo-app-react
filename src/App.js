@@ -1,25 +1,41 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Header from './components/Header';
 import Form from './components/Form';
 import TaskList from './components/TaskList';
 
-const tasks = {
-  lastId: 2,
-  tasks: [
-    { id: 1, title: 'nice task', done: true }
-  ]
-}
-
+const tasks = {};
 
 export default function App() {
-  const [state, setState] = useState(tasks);
+
+  
+  const [state, setState] = useState({
+    tasks: [],
+    lastId: 0,
+    loaded: false
+  });
+
+  const fetchTasks = async () => {
+    const data = await fetch('https://61967e7baf46280017e7e111.mockapi.io/api/v1/test/tasks');
+    const json = await data.json();
+
+    setState({
+      tasks: json.map(task => {return {...task, id: parseInt(task.id)}}),
+      lastId: json.length+1,
+      loaded: true
+    });
+  };
+  
+  useEffect(() => {
+    fetchTasks();
+    console.log('yeah');
+  }, []);
 
   function updateTask(e) {
     setState(state => {
       return {
         lastId: state.lastId,
         tasks: state.tasks.map(task => {
-          if (task.id == e.target.parentElement.dataset.id) {
+          if (task.id === parseInt(e.target.parentElement.dataset.id)) {
             return {...task, done: !task.done}
           } else {
             return task;
@@ -33,7 +49,7 @@ export default function App() {
     setState(state => {
       return {
         lastId: state.lastId,
-        tasks: state.tasks.filter(task => task.id != e.target.parentElement.dataset.id)
+        tasks: state.tasks.filter(task => task.id !== parseInt(e.target.parentElement.dataset.id))
       }
     });
   }
@@ -49,6 +65,15 @@ export default function App() {
     })
   }
 
+  function clearCompleted() {
+    setState((prevState) => {
+      return {
+        ...prevState,
+        tasks: prevState.tasks.filter(task => !task.done)
+      }
+    });
+  }
+
   return (
     <div className='app-container'>
       <Header title='Todo' />
@@ -57,7 +82,7 @@ export default function App() {
           <Form addTask={addTask}/>
         </section>
         <section className='tasks'>
-          <TaskList tasks={state.tasks} updateTask={updateTask} deleteTask={deleteTask}/>
+          <TaskList tasks={state.tasks} updateTask={updateTask} deleteTask={deleteTask} clearCompleted={clearCompleted}/>
         </section>
       </main>
     </div>
