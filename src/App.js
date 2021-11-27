@@ -3,8 +3,6 @@ import Header from './components/Header';
 import Form from './components/Form';
 import TaskList from './components/TaskList';
 
-const tasks = {};
-
 export default function App() {
 
   
