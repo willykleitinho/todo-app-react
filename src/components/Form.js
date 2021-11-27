@@ -4,9 +4,7 @@ export default function Form({addTask}) {
   
   const [state, setState] = useState('');
 
-  function handleChange(e) {
-    setState(e.target.value);
-  }
+  const handleChange = (e) => setState(e.target.value);
 
   function check(e) {
     e.preventDefault();

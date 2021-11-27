@@ -1,35 +1,37 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import Header from './components/Header';
 import Form from './components/Form';
 import TaskList from './components/TaskList';
 
-export default function App() {
-
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tasks: [],
+      lastId: 0,
+      loaded: false
+    };
+    this.updateTask = this.updateTask.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
+    this.addTask = this.addTask.bind(this);
+    this.clearCompleted = this.clearCompleted.bind(this);
+  }
+  componentDidMount() {
+    (async () => {
+      const data = await fetch('https://61967e7baf46280017e7e111.mockapi.io/api/v1/test/tasks');
+      const json = await data.json();
   
-  const [state, setState] = useState({
-    tasks: [],
-    lastId: 0,
-    loaded: false
-  });
-
-  const fetchTasks = async () => {
-    const data = await fetch('https://61967e7baf46280017e7e111.mockapi.io/api/v1/test/tasks');
-    const json = await data.json();
-
-    setState({
-      tasks: json.map(task => {return {...task, id: parseInt(task.id)}}),
-      lastId: json.length+1,
-      loaded: true
-    });
-  };
+      this.setState({
+        tasks: json.map(task => {return {...task, id: parseInt(task.id)}}),
+        lastId: json.length+1,
+        loaded: true
+      })
+    })();
+    console.log('mounted');
+  }
   
-  useEffect(() => {
-    fetchTasks();
-    console.log('yeah');
-  }, []);
-
-  function updateTask(e) {
-    setState(state => {
+  updateTask(e) {
+    this.setState(state => {
       return {
         lastId: state.lastId,
         tasks: state.tasks.map(task => {
@@ -43,8 +45,8 @@ export default function App() {
     });
   }
 
-  function deleteTask(e) {
-    setState(state => {
+  deleteTask(e) {
+    this.setState(state => {
       return {
         lastId: state.lastId,
         tasks: state.tasks.filter(task => task.id !== parseInt(e.target.parentElement.dataset.id))
@@ -52,8 +54,8 @@ export default function App() {
     });
   }
 
-  function addTask(title) {
-    setState(state => {
+  addTask(title) {
+    this.setState(state => {
       const tasks = [...state.tasks];
       tasks.push({title: title, id: state.lastId, done: false});
       return {
@@ -63,8 +65,8 @@ export default function App() {
     })
   }
 
-  function clearCompleted() {
-    setState((prevState) => {
+  clearCompleted() {
+    this.setState((prevState) => {
       return {
         ...prevState,
         tasks: prevState.tasks.filter(task => !task.done)
@@ -72,17 +74,19 @@ export default function App() {
     });
   }
 
-  return (
-    <div className='app-container'>
-      <Header title='Todo' />
-      <main>
-        <section>
-          <Form addTask={addTask}/>
-        </section>
-        <section className='tasks'>
-          <TaskList tasks={state.tasks} updateTask={updateTask} deleteTask={deleteTask} clearCompleted={clearCompleted}/>
-        </section>
-      </main>
-    </div>
-  );
+  render() {
+    return (
+      <div className='app-container'>
+        <Header title='Todo' />
+        <main>
+          <section>
+            <Form addTask={this.addTask}/>
+          </section>
+          <section className='tasks'>
+            <TaskList tasks={this.state.tasks} updateTask={this.updateTask} deleteTask={this.deleteTask} clearCompleted={this.clearCompleted}/>
+          </section>
+        </main>
+      </div>
+    );
+  }
 }

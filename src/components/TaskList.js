@@ -7,9 +7,7 @@ export default function TaskList({tasks, updateTask, deleteTask, clearCompleted}
 
   const [view, setView] = useState('all');
 
-  function updateView(e) {
-    setView(e.target.dataset.view);
-  }
+  const updateView = (e) => setView(e.target.dataset.view);
 
   const filterTasks = (view) => {
     switch(view) {
@@ -22,7 +20,7 @@ export default function TaskList({tasks, updateTask, deleteTask, clearCompleted}
       default:
         return;
     }
-  }
+  };
 
   return (
     <>
@@ -30,10 +28,13 @@ export default function TaskList({tasks, updateTask, deleteTask, clearCompleted}
       <h3 className="hidden">Task list</h3>
       <ul id="tasks-list">
         {filterTasks(view).map(task => 
-          <Task key={task.id} title={task.title} id={task.id} done={task.done} updateTask={updateTask} deleteTask={deleteTask} />)}
+          <Task key={task.id} title={task.title}
+                id={task.id} done={task.done}
+                updateTask={updateTask} deleteTask={deleteTask} />)}
       </ul>
       <h3 className="hidden">Controls</h3>
-      <Controls length={tasks.filter(task => !task.done).length} view={view} updateView={updateView} clearCompleted={clearCompleted}/>
+      <Controls length={tasks.filter(task => !task.done).length} 
+                view={view} updateView={updateView} clearCompleted={clearCompleted}/>
     </>
   );
 }
