@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 export default function Header({title}) {
   return (
     <header>
-      <h1 className="title">{title}</h1>
+      <h1 className="header-title">{title}</h1>
       <ThemeToggler />
     </header>
   )
@@ -24,10 +24,10 @@ function ThemeToggler() {
     <fieldset className='theme-toggler' onClick={switchTheme}>
       <legend className='hidden'>Theme switcher</legend>
       <label className={'dark ' + ((theme === 'light') ? 'selected' : 'move')}>
-        <input name='theme' type="radio" /> <span className='hidden'>Light theme</span>
+        <input name='theme' type="radio" className='hidden'/> <span className='hidden'>Light theme</span>
       </label>
       <label className={'light ' + ((theme === 'dark') ? 'selected' : 'move')}>
-        <input name='theme' type="radio" /> <span className='hidden'>Dark theme</span>
+        <input name='theme' type="radio" className='hidden'/> <span className='hidden'>Dark theme</span>
       </label>
     </fieldset>
   );

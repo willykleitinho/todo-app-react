@@ -148,24 +148,70 @@ header {
   margin-bottom: 25px;
 }
 
-header .title {
+.header-title {
   font-size: 25px;
   letter-spacing: 10px;
 }
 
-header .toggler {
-  background: transparent;
-  color: white;
-  border: 0;
+.theme-toggler {
+  border: none;
   width: 30px;
   height: 30px;
-  background: url("images/icon-sun.svg") right no-repeat;
+
+  position: relative;
 }
+
+.theme-toggler label {
+  color: #999;
+  display: block;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  transition: 500ms;
+}
+
+.theme-toggler label.selected {
+  top: 0;
+  color: white;
+  opacity: 1;
+}
+
+.theme-toggler label.move {
+  top: 20px;
+  opacity: 0;
+}
+
+.theme-toggler .light {
+  background: url("./images/icon-sun.svg") right no-repeat;
+}
+
+.theme-toggler .dark {
+  background: url("./images/icon-moon.svg") right no-repeat
+}
+
+.theme-toggler input:focus-visible::after {
+  outline: 3px solid var(--clr-primary);
+  outline-offset: 2px;
+}
+
 
 .add-task-form,
 .tasks {
   border-radius: 5px;
   background: var(--clr-tasks-bg);
+}
+
+.add-task-form button {
+  border: 1px solid var(--clr-3-1);
+  width: 24px;
+  height: 24px;
+  border-radius: 100px;
+  display: inline-block;
+  background: transparent;
+}
+
+.add-task-form button:hover {
+  border-color: var(--clr-text-primary-hover);
 }
 
 .tasks {
@@ -190,42 +236,52 @@ header .toggler {
 
 /* TODO: grabbing cursor while dragging */
 
-.task .title {
+.title {
   font-size: 1rem;
   flex: 1;
   color: var(--clr-text-primary);
-  margin: 0 15px;
+  padding-left: 39px;
   cursor: grab;
   transition: color 200ms;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
+  position: relative;
 }
 
-.task .title:hover {
+.title:hover {
   color: var(--clr-text-primary-hover);
 }
 
-.checkmark {
-  border: 1px solid var(--clr-3-1);
+.title::before, .title::after {
+  content: '';
+  display: block;
   width: 24px;
   height: 24px;
+  position: absolute;
+  background: var(--clr-3-1);
+  top: -2px;
+  left: 0;
   border-radius: 100px;
-  display: inline-block;
-  background: transparent;
+  transition: 100ms;
 }
 
-/* TODO: checkmark hover border*/
-.checkmark:hover {
-  color: k;
+.title::after {
+  width: 22px;
+  height: 22px;
+  top: -1.5px;
+  left: 1.5px;
+  background: var(--clr-tasks-bg);
 }
 
-.done .checkmark {
-  border: 0;
+.done .title::before, .title:hover::before {
   background: url("images/icon-check.svg") no-repeat center, 
               linear-gradient(135deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
 }
-            
+
+.done .title::after {
+  background: none;
+}
+
 .done .title {
   color: var(--clr-text-secondary);
   text-decoration: line-through;
@@ -235,6 +291,11 @@ header .toggler {
   color: var(--clr-text-secondary);
 }
 
+.task input:focus-visible + label::before {
+  outline: 3px solid var(--clr-primary);
+  outline-offset: 2px;
+}
+
 .remove-task-button {
   display: inline-block;
   background: transparent;
@@ -242,6 +303,12 @@ header .toggler {
   width: 19px;
   height: 19px;
   background: url("images/icon-cross.svg") no-repeat;
+  transition: outline 100ms, outline-offset 100ms;
+}
+
+.remove-task-button:focus-visible {
+  outline: 3px solid var(--clr-primary);
+  outline-offset: 2px;
 }
 
 .controls {
@@ -269,7 +336,12 @@ header .toggler {
   border: 0;
   background-color: transparent;
   font-family: var(--font-family);
-  transition: color 200ms;
+  transition: color 200ms, outline 100ms, outline-offset 100ms;
+}
+
+.controls button:focus-visible {
+  outline: 3px solid var(--clr-primary);
+  outline-offset: 2px;
 }
 
 .controls button:hover {
@@ -348,7 +420,7 @@ header .toggler {
     margin-bottom: 45px;
   }
 
-  header .title {
+  .header-title {
     font-size: 35px;
     letter-spacing: 20px;
   }
@@ -376,7 +448,7 @@ header .toggler {
   }
 
   .task .title {
-    margin: 0 25px;
+    padding-left: 49px;
   }
   
   .controls {
@@ -391,44 +463,4 @@ header .toggler {
     margin: 50px 0;
     margin-bottom: 30px;
   }
-}
-
-.theme-toggler {
-  border: none;
-  width: 30px;
-  height: 30px;
-
-  position: relative;
-}
-
-.theme-toggler input {
-  display: none;
-}
-
-.theme-toggler label {
-  color: #999;
-  display: block;
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  transition: 500ms;
-}
-
-.theme-toggler label.selected {
-  top: 0;
-  color: white;
-  opacity: 1;
-}
-
-.theme-toggler label.move {
-  top: 20px;
-  opacity: 0;
-}
-
-.theme-toggler .light {
-  background: url("./images/icon-sun.svg") right no-repeat;
-}
-
-.theme-toggler .dark {
-  background: url("./images/icon-moon.svg") right no-repeat
 }
