@@ -8,8 +8,8 @@ export default function Form({addTask}) {
 
   function check(e) {
     e.preventDefault();
-    if (state) {
-      addTask(state);
+    if (state.trim()) {
+      addTask(state.trim());
       setState('');
     }
   }
