@@ -6,28 +6,25 @@ import TaskList from './components/TaskList';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+
+    let json = {
       tasks: [],
       lastId: 0,
-      loaded: false
     };
+
+    const tasks = window.localStorage.getItem('tasks');
+    if (tasks) {
+     json = JSON.parse(tasks);
+    }
+
+    this.state = json;
     this.updateTask = this.updateTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
     this.addTask = this.addTask.bind(this);
     this.clearCompleted = this.clearCompleted.bind(this);
   }
-  componentDidMount() {
-    (async () => {
-      const data = await fetch('https://61967e7baf46280017e7e111.mockapi.io/api/v1/test/tasks');
-      const json = await data.json();
-  
-      this.setState({
-        tasks: json.map(task => {return {...task, id: parseInt(task.id)}}),
-        lastId: json.length+1,
-        loaded: true
-      })
-    })();
-    console.log('mounted');
+  componentDidUpdate() {
+    window.localStorage.setItem('tasks', JSON.stringify(this.state));
   }
   
   updateTask(e) {
