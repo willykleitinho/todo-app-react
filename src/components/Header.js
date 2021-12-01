@@ -1,21 +1,34 @@
-
-function toggleTheme() {
-  if (document.body.className) {
-    document.body.className = '';
-    window.localStorage.setItem('theme', 'dark');
-  } else {
-    document.body.className = 'light-theme';
-    window.localStorage.setItem('theme', 'light');
-  }
-}
+import { useState, useEffect } from 'react';
 
 export default function Header({title}) {
   return (
     <header>
       <h1 className="title">{title}</h1>
-      <button className="toggler" onClick={toggleTheme}>
-        <span className="hidden">Change app theme</span>
-      </button>
+      <ThemeToggler />
     </header>
   )
+}
+
+
+function ThemeToggler() {
+  const [theme, setTheme] = useState('dark');
+
+  function switchTheme(e) {
+    e.preventDefault();
+    setTheme((theme) => (theme === 'light') ? 'dark' : 'light');
+  }
+
+  useEffect(() => document.body.className = (theme === 'light') ? 'light-theme' : '');
+
+  return (
+    <fieldset className='theme-toggler' onClick={switchTheme}>
+      <legend className='hidden'>Theme switcher</legend>
+      <label className={'dark ' + ((theme === 'light') ? 'selected' : 'move')}>
+        <input name='theme' type="radio" /> <span className='hidden'>Light theme</span>
+      </label>
+      <label className={'light ' + ((theme === 'dark') ? 'selected' : 'move')}>
+        <input name='theme' type="radio" /> <span className='hidden'>Dark theme</span>
+      </label>
+    </fieldset>
+  );
 }

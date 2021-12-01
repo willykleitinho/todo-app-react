@@ -392,3 +392,43 @@ header .toggler {
     margin-bottom: 30px;
   }
 }
+
+.theme-toggler {
+  border: none;
+  width: 30px;
+  height: 30px;
+
+  position: relative;
+}
+
+.theme-toggler input {
+  display: none;
+}
+
+.theme-toggler label {
+  color: #999;
+  display: block;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  transition: 500ms;
+}
+
+.theme-toggler label.selected {
+  top: 0;
+  color: white;
+  opacity: 1;
+}
+
+.theme-toggler label.move {
+  top: 20px;
+  opacity: 0;
+}
+
+.theme-toggler .light {
+  background: url("./images/icon-sun.svg") right no-repeat;
+}
+
+.theme-toggler .dark {
+  background: url("./images/icon-moon.svg") right no-repeat
+}
