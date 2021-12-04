@@ -24,10 +24,12 @@ function ThemeToggler() {
     <fieldset className='theme-toggler' onClick={switchTheme}>
       <legend className='hidden'>Theme switcher</legend>
       <label className={'dark ' + ((theme === 'light') ? 'selected' : 'move')}>
-        <input name='theme' type="radio" className='hidden'/> <span className='hidden'>Light theme</span>
+        <input name='theme' type='radio' className='hidden'/>
+        <span className='hidden'>Light theme</span>
       </label>
       <label className={'light ' + ((theme === 'dark') ? 'selected' : 'move')}>
-        <input name='theme' type="radio" className='hidden'/> <span className='hidden'>Dark theme</span>
+        <input name='theme' type='radio' className='hidden'/>
+        <span className='hidden'>Dark theme</span>
       </label>
     </fieldset>
   );

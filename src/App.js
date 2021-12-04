@@ -23,6 +23,7 @@ export default class App extends React.Component {
     this.addTask = this.addTask.bind(this);
     this.clearCompleted = this.clearCompleted.bind(this);
   }
+
   componentDidUpdate() {
     window.localStorage.setItem('tasks', JSON.stringify(this.state));
   }
@@ -33,7 +34,7 @@ export default class App extends React.Component {
         lastId: state.lastId,
         tasks: state.tasks.map(task => {
           if (task.id === parseInt(e.target.parentElement.dataset.id)) {
-            return {...task, done: !task.done}
+            return {...task, done: !task.done};
           } else {
             return task;
           }
@@ -57,9 +58,9 @@ export default class App extends React.Component {
       tasks.push({title: title, id: state.lastId, done: false});
       return {
         tasks: tasks,
-        lastId: state.lastId+1
+        lastId: state.lastId + 1
       };
-    })
+    });
   }
 
   clearCompleted() {
@@ -77,10 +78,11 @@ export default class App extends React.Component {
         <Header title='Todo' />
         <main>
           <section>
-            <Form addTask={this.addTask}/>
+            <Form addTask={this.addTask} />
           </section>
           <section className='tasks'>
-            <TaskList tasks={this.state.tasks} updateTask={this.updateTask} deleteTask={this.deleteTask} clearCompleted={this.clearCompleted}/>
+            <TaskList tasks={this.state.tasks} updateTask={this.updateTask} 
+                      deleteTask={this.deleteTask} clearCompleted={this.clearCompleted} />
           </section>
         </main>
       </div>
