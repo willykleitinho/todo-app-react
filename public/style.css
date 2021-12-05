@@ -189,9 +189,9 @@ header {
   background: url("./images/icon-moon.svg") right no-repeat
 }
 
-.theme-toggler input:focus-visible::after {
-  outline: 3px solid var(--clr-primary);
-  outline-offset: 2px;
+.theme-toggler-input:focus-visible + span {
+  outline: 10px solid var(--clr-primary);
+  outline-offset: 10px;
 }
 
 
